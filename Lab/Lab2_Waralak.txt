@@ -1,0 +1,223 @@
+Waralak Pariwatphan
+############################################################################################
+
+
+(1)
+beer@B:~/FSE/Lecture2$ echo ABCD efgh IjKl mNoP | sed -E "s/(.*)/\L\1/"
+abcd efgh ijkl mnop
+
+
+(2)
+beer@B:~/FSE/Lecture2$ echo -e "1 danger\n2 danger danger\n3 danger danger danger" | sed "s/danger/safety/2"
+1 danger
+2 danger safety
+3 danger safety danger
+
+
+(3)
+beer@B:~/FSE/Lecture2$ echo -e "1 danger\n2 danger safety\n3 uncertainty safety" | sed -E "/danger/a Waralak"
+1 danger
+Waralak
+2 danger safety
+Waralak
+3 uncertainty safety
+
+
+(4)
+beer@B:~/FSE/Lecture2$ echo danger hate abcd danger hate | sed -e "s/danger/safety/g" -e "s/hate/love/g"
+safety love abcd safety love
+
+
+(5)
+beer@B:~/FSE/Lecture2$ echo 1 a 2 b 3 c 4 d | sed "s/[0-9]/\%/g"
+% a % b % c % d
+
+
+(6)
+beer@B:~/FSE/Lecture2$ head practical_2/names_sed.txt | sed -E "s/(.*)\t(.*) (.*)\t(.*)\t(.*)/\1\t\3 \2\t\4\t\5/"
+Governor of Alabama	Ivey Kay	Republican	April 10, 2017
+Governor of Alaska	Dunleavy Mike	Republican	December 3, 2018
+Governor of American Samoa	Mauga Lemanu Palepoi	Democratic	January 3, 2021
+Governor of Arizona	Ducey Doug	Republican	January 5, 2015
+Governor of Arkansas	Hutchinson Asa	Republican	January 13, 2015
+Governor of California	Newsom Gavin	Democratic	2019
+Governor of Colorado	Polis Jared	Democratic	2019
+Governor of Connecticut	Lamont Ned	Democratic	2019
+Governor of Delaware	Jr. John C. Carney	Democratic	January 17, 2017
+Governor of Florida	DeSantis Ron	Republican	January 8, 2019
+
+
+(7)
+beer@B:~/FSE/Lecture2$ vim task7.py
+beer@B:~/FSE/Lecture2$ cat task7.py
+#!/usr/bin/env python3
+
+import platform
+
+def check_platform():
+    return platform.system()
+
+if __name__ == '__main__':
+    print("Checking in progress...")
+    if check_platform() == "Windows":
+        print("Please switch to Linux")
+beer@B:~/FSE/Lecture2$ chmod +x task7.py
+beer@B:~/FSE/Lecture2$ ./task7.py
+Checking in progress...
+
+            
+(8)
+beer@B:~/FSE/Lecture2$ vim process.py
+beer@B:~/FSE/Lecture2$ chmod +x process.py
+beer@B:~/FSE/Lecture2$ cat process.py
+#!/usr/bin/env python3
+
+from sys import stdin
+
+def process(input):
+    try:
+        id = int(id)
+        if id <= 0:
+            print("ID should be integer!!")
+        age = float(age)
+        print(f"{id + 2}, {name.lower().replace(' ', '_')}, {age * 0.5}")
+
+    except ValueError:
+        print("Please check your input data format!")
+        return
+
+if __name__ == "__main__":
+    for data in stdin:
+        process(data)
+beer@B:~/FSE/Lecture2$ ./process.py
+1,Yuri Gagarin,32.5
+3, yuri_gagarin, 16.25
+-1,root,0.0
+ID should be integer!!
+3,notauser,notanumber
+Please check your input data format!
+
+
+(9)
+beer@B:~/FSE/Lecture2$ vim task7_1.py
+beer@B:~/FSE/Lecture2$ cat task7_1.py
+#!/usr/bin/env python3
+
+import platform
+
+def check_py_ver():
+    return platform.python_version()[0]
+
+if __name__ == '__main__':
+    print("Checking in progress...")
+    if check_py_ver() == "2":
+        print("Please switch to python3")
+beer@B:~/FSE/Lecture2$ chmod +x task7_1.py
+beer@B:~/FSE/Lecture2$ ./task7_1.py
+Checking in progress...
+
+
+(10)
+beer@B:~/FSE/Lecture2$ vim task7.py
+beer@B:~/FSE/Lecture2$ cat task7.py
+#!/usr/bin/env python3
+
+import platform
+
+#def check_platform():
+#    return platform.system()
+
+if __name__ == '__main__':
+    print("Checking in progress...")
+    if check_platform() == "Windows":
+        print("Please switch to Linux")
+beer@B:~/FSE/Lecture2$ 
+
+
+(11)
+beer@B:~/FSE/Lecture2$ vim task7.py
+beer@B:~/FSE/Lecture2$ cat task7.py
+#!/usr/bin/env python3
+
+import platform
+
+#def inspect_platform():
+#    return platform.system()
+
+if __name__ == '__main__':
+    print("Checking in progress...")
+    if inspect_platform() == "Windows":
+        print("Please switch to Linux")
+
+
+(12)
+beer@B:~/FSE/Lecture2$ touch file1.txt | chmod 775 file1.txt
+beer@B:~/FSE/Lecture2$ touch file2.txt | chmod 444 file2.txt
+beer@B:~/FSE/Lecture2$ find . -perm 775
+.
+./file1.txt
+./process.py
+./task7.py
+./task7_1.py
+./practical_2
+
+
+(13)
+beer@B:~/FSE/Lecture2$ mkdir foo bar | touch {foo,bar}/{0..9}.txt
+beer@B:~/FSE/Lecture2$ find ./{foo,bar} -name [2468].txt -delete
+
+
+(14)
+beer@B:~/FSE/Lecture2$ find -type f -amin -60
+./file1.txt
+./file2.txt
+./foo/3.txt
+./foo/5.txt
+./foo/1.txt
+./foo/9.txt
+./foo/0.txt
+./foo/7.txt
+./Untitled Document 1
+./bar/3.txt
+./bar/5.txt
+./bar/1.txt
+./bar/9.txt
+./bar/0.txt
+./bar/7.txt
+./task7.py
+
+
+(15)
+beer@B:~/FSE/Lecture2$ truncate -s 50M file50M.txt | truncate -s 60M file60M.txt | truncate -s 70M file70M.txt
+beer@B:~/FSE/Lecture2$ ls -l
+total 1340
+drwxrwxr-x 2 beer beer     4096 Oct  9 18:34  bar
+-rwxrwxr-x 1 beer beer        0 Oct  9 18:17  file1.txt
+-r--r--r-- 1 beer beer        0 Oct  9 18:22  file2.txt
+-rw-rw-r-- 1 beer beer 52428800 Oct  9 18:52  file50M.txt
+-rw-rw-r-- 1 beer beer 62914560 Oct  9 18:52  file60M.txt
+-rw-rw-r-- 1 beer beer 73400320 Oct  9 18:52  file70M.txt
+drwxrwxr-x 2 beer beer     4096 Oct  9 18:34  foo
+-rw-rw-r-- 1 beer beer       55 Oct  9 13:57  greet.py
+-rw-rw-r-- 1 beer beer   113626 Oct  5 21:12 'Lecture 2.pdf'
+drwxrwxr-x 2 beer beer     4096 Oct  9 13:46  practical_2
+-rw-rw-r-- 1 beer beer  1222824 Oct  9 11:36 'practical 2.zip'
+-rw-rw-r-- 1 beer beer      354 Oct  9 17:42  task7.py
+-rw-rw-r-- 1 beer beer     7157 Oct  9 18:42 'Untitled Document 1'
+-rw-rw-r-- 1 beer beer      122 Oct  9 14:40  upper.txt
+beer@B:~/FSE/Lecture2$ find . -size +50000k -size -100000k
+./file50M.txt
+./file70M.txt
+./file60M.txt
+
+
+(16)
+beer@B:~/FSE/Lecture2$ find . -name "*.py" -exec grep "import" {} \;
+import platform
+
+
+(17)
+beer@B:~/FSE/Lecture2$ nr_files='cat /etc/passwd | wc -l'
+beer@B:~/FSE/Lecture2$ eval "$nr_files"
+47
+

@@ -1,0 +1,189 @@
+
+Waralak Pariwatphan
+Prateek Rajput
+#########################################################
+
+(1)
+beer@B:~$ sudo apt-get install figlet
+[sudo] password for beer: 
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  figlet
+0 upgraded, 1 newly installed, 0 to remove and 151 not upgraded.
+Need to get 133 kB of archives.
+After this operation, 752 kB of additional disk space will be used.
+Get:1 http://ru.archive.ubuntu.com/ubuntu jammy/universe amd64 figlet amd64 2.2.5-3 [133 kB]
+Fetched 133 kB in 0s (799 kB/s)  
+Selecting previously unselected package figlet.
+(Reading database ... 159906 files and directories currently installed.)
+Preparing to unpack .../figlet_2.2.5-3_amd64.deb ...
+Unpacking figlet (2.2.5-3) ...
+Setting up figlet (2.2.5-3) ...
+update-alternatives: using /usr/bin/figlet-figlet to provide /usr/bin/figlet (figlet) in auto mode
+Processing triggers for man-db (2.10.2-1) ...
+beer@B:~$ figlet hello ubuntu
+ _          _ _               _                 _         
+| |__   ___| | | ___    _   _| |__  _   _ _ __ | |_ _   _ 
+| '_ \ / _ \ | |/ _ \  | | | | '_ \| | | | '_ \| __| | | |
+| | | |  __/ | | (_) | | |_| | |_) | |_| | | | | |_| |_| |
+|_| |_|\___|_|_|\___/   \__,_|_.__/ \__,_|_| |_|\__|\__,_|
+                                                          
+beer@B:~$ sudo apt-get remove figlet
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages will be REMOVED:
+  figlet
+0 upgraded, 0 newly installed, 1 to remove and 151 not upgraded.
+After this operation, 752 kB disk space will be freed.
+Do you want to continue? [Y/n] y
+(Reading database ... 159981 files and directories currently installed.)
+Removing figlet (2.2.5-3) ...
+Processing triggers for man-db (2.10.2-1) ...
+
+(2)
+beer@B:~$ mkdir fes
+beer@B:~$ cd fes
+beer@B:~/fes$ touch file{1..10}.txt
+beer@B:~/fes$ find -name "file[4-6].txt" -delete
+
+(3)
+beer@B:~/fes$ ls -l > contents.txt
+
+(4)
+beer@B:~/fes$ find /home/beer -name "file*" | wc -l
+9
+
+(5)
+beer@B:~/fes$ sort < /etc/passwd > foo.txt 2> err.txt
+
+(6)
+prateek@L:~$ cd foundations\ of\ SE/
+prateek@L:~/foundations of SE$ ls
+'Lecture 1.pdf'   practical_1_unix_local_machine_1
+ __MACOSX         practical_1_unix_local_machine_1.zip
+prateek@L:~/foundations of SE$ cd practical_1_unix_local_machine_1/
+prateek@L:~/foundations of SE/practical_1_unix_local_machine_1$ find . -maxdepth 2 -type f -name "*.txt" | wc -l
+19
+
+(7)
+prateek@L:~$ cd foundations\ of\ SE/
+prateek@L:~/foundations of SE$ mkdir Box
+prateek@L:~/foundations of SE$ sudo chown :users Box
+[sudo] password for prateek: 
+prateek@L:~/foundations of SE$ chmod g+wxs Box/
+prateek@L:~/foundations of SE$ chmod o+t Box/
+
+(8)
+prateek@L:~$ cd foundations\ of\ SE/
+prateek@L:~/foundations of SE$ ls
+'Lecture 1.pdf'   practical_1_unix_local_machine_1
+ __MACOSX         practical_1_unix_local_machine_1.zip
+prateek@L:~/foundations of SE$ cd practical_1_unix_local_machine_1/
+prateek@L:~/foundations of SE/practical_1_unix_local_machine_1$ find . -maxdepth 2 -type f -name "*.txt" | wc -l
+19
+
+(9)
+prateek@L:~/foundations of SE$ ls
+ Box              practical_1_unix_local_machine_1
+'Lecture 1.pdf'   practical_1_unix_local_machine_1.zip
+ __MACOSX
+prateek@L:~/foundations of SE$ cd practical_1_unix_local_machine_1/
+prateek@L:~/foundations of SE/practical_1_unix_local_machine_1$ find . -maxdepth 2 -type f -name "00221*" | wc -l
+11
+
+
+(10)
+prateek@L:~/foundations of SE/practical_1_unix_local_machine_1$ find . -maxdepth 2 -type f -name "*__stats.txt" -exec sh -c "wc -l {} " \;
+90 ./8192/00220230_b79b40ef8721383269a6542c_004__stats.txt
+90 ./8192/00221425_7b0c6827c5c1bd442ddfc23c_011__stats.txt
+90 ./8192/00221410_0a7e21b0760b39c09a373428_000__stats.txt
+90 ./8192/00221910_fa32a7d1af74d41100997dd0_004__stats.txt
+90 ./8192/00221459_ce3275b91ab34c2dafd5da66_022__stats.txt
+90 ./8192/00221909_fa32a7d1af74d41100997dd0_003__stats.txt
+90 ./8192/00221960_be1332983e6a04a7ac3a5d0e_004__stats.txt
+90 ./8192/00220226_b79b40ef8721383269a6542c_000__stats.txt
+90 ./8192/00220340_65e929ab1fef8cf7f1d9a9d2_000__stats.txt
+90 ./4096/00222154_9fec21f45aae56c9022e625f_000__stats.txt
+90 ./4096/00222038_60fb70c2d0d566b3508d9d4f_002__stats.txt
+90 ./4096/00222413_57576437f76e1bc3976ca308_000__stats.txt
+90 ./4096/00222228_0ca11bb5d8d4ee172802d84c_003__stats.txt
+90 ./16384/00222000_57b7ac86e4b08c5528961f00_001__stats.txt
+90 ./16384/00221501_ce3275b91ab34c2dafd5da66_064__stats.txt
+90 ./16384/00221961_be1332983e6a04a7ac3a5d0e_005__stats.txt
+90 ./16384/00221684_e630ec60d4d5148a45ac0fa0_000__stats.txt
+90 ./16384/00221909_fa32a7d1af74d41100997dd0_003__stats.txt
+90 ./16384/00221960_be1332983e6a04a7ac3a5d0e_004__stats.txt
+
+(11)
+beer@B:~/Downloads$ cd ..
+beer@B:~$ sudo du -s /* | sort -nr
+du: cannot access '/proc/14350/task/14350/fd/4': No such file or directory
+du: cannot access '/proc/14350/task/14350/fdinfo/4': No such file or directory
+du: cannot access '/proc/14350/fd/3': No such file or directory
+du: cannot access '/proc/14350/fdinfo/3': No such file or directory
+du: cannot access '/run/user/1000/doc': Permission denied
+du: cannot access '/run/user/1000/gvfs': Permission denied
+4728896	/usr
+4673540	/swapfile
+4301210	/snap
+2932556	/var
+997504	/home
+121200	/boot
+14180	/etc
+2084	/run
+256	/tmp
+60	/root
+16	/lost+found
+8	/media
+4	/srv
+4	/opt
+4	/mnt
+4	/cdrom
+0	/sys
+0	/sbin
+0	/proc
+0	/libx32
+0	/lib64
+0	/lib32
+0	/lib
+0	/dev
+0	/bin
+
+(12)
+beer@B:~$ ls / | grep -v sys | xargs -I@ sudo du -s /@ | sort -nr | head -1
+du: cannot access '/proc/14627/task/14627/fd/4': No such file or directory
+du: cannot access '/proc/14627/task/14627/fdinfo/4': No such file or directory
+du: cannot access '/proc/14627/fd/3': No such file or directory
+du: cannot access '/proc/14627/fdinfo/3': No such file or directory
+du: cannot access '/run/user/1000/doc': Permission denied
+du: cannot access '/run/user/1000/gvfs': Permission denied
+4728896	/usr
+
+(13)
+beer@B:~$ ls / | grep -v sys | xargs -I@ sudo du -s /@ | sort -nr | grep -vE '^0'
+du: cannot access '/proc/14725/task/14725/fd/4': No such file or directory
+du: cannot access '/proc/14725/task/14725/fdinfo/4': No such file or directory
+du: cannot access '/proc/14725/fd/3': No such file or directory
+du: cannot access '/proc/14725/fdinfo/3': No such file or directory
+du: cannot access '/run/user/1000/doc': Permission denied
+du: cannot access '/run/user/1000/gvfs': Permission denied
+4728896	/usr
+4673540	/swapfile
+4301210	/snap
+2933440	/var
+1024288	/home
+121200	/boot
+14180	/etc
+2084	/run
+256	/tmp
+60	/root
+16	/lost+found
+8	/media
+4	/srv
+4	/opt
+4	/mnt
+4	/cdrom
+

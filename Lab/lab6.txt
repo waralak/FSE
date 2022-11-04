@@ -1,0 +1,39 @@
+1. docker run -v ~/fse/lab6/data:/app -it ubuntu:22.04
+	mkdir /app && vim /app/timestamer.sh
+	chmod u+x /app/timestamer.sh && /app/timestamer.sh &
+	Ctrl+P+Q
+	tail -n 5 data/dates.log
+	
+	#!/bin/bash
+	for sec in {1..60}
+	do
+		echo $(date) >> /data/dates.log
+		sleep 1
+	done
+	
+2. docker pull jupyter/datascience-notebook
+	docker run -p 8888:8888 jupyter/datascience-notebook
+	
+	successfully opened JupyterLab in browser
+	
+3. docker run -v ~/fse/lab6/data:/data -it --env lifetime=60 ubuntu:22.04
+	mkdir /app && vim /app/timestamer.sh	
+	chmod u+x /app/timestamer.sh && /app/timestamer.sh &
+	Ctrl+P+Q
+	tail -n 5 data/dates.log
+	
+	#!/bin/bash
+	for sec in $(seq 1 $lifetime)
+	do
+		echo $(date) >> /data/dates.log
+		sleep 1
+	done
+	
+4. #!/bin/bash
+	lifetime="${lifetime:-30}"
+	for sec in $(seq 1 $lifetime)
+	do
+		echo $(date) >> /data/dates.log
+		sleep 1
+	done 
+

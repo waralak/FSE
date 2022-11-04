@@ -1,0 +1,45 @@
+1.1 ssh-keygen -t ed25519 -b 1024 -f new_key_ed25519
+	 ssh-keygen -p -f new_key_ed25519
+1.2 ssh-copy-id -n ip172-18-0-30-cd6l5be3tccg00b3vnn0@direct.labs.play-with-docker.com
+	 ssh-copy-id -i new_key_ed25519.pub ip172-18-0-30-cd6l5be3tccg00b3vnn0@direct.labs.play-with-docker.com
+	
+2.1
+  a.  
+	nohup `bash -c "sleep 100; echo complete"` 1> std.out 2> std.err &
+	exit
+  b.
+  	ssh ip172-18-0-30-cd6l5be3tccg00b3vnn0@direct.labs.play-with-docker.com "nohup "bash -c "sleep 10; echo complete"" 1> std.out 2> std.err &; exit"
+  	
+2.2 
+  a.
+  	1>&2 ls -lh
+  b.
+  	ls -lh 1> std.out 2> std.err
+  c.
+  	ls -lh | tee out.txt
+  d.
+  	ls -lh 1> >(tee file.txt)
+  	
+4.1 rsync -avP --min-size=10M --max-size=20M /directory_remote/*  ip172-18-0-25-cd6nv063tccg00b40390@direct.labs.play-with-docker.com:/directory_remote
+4.2 rsync -avP --exclude=a*z directory_remote/* ip172-18-0-25-cd6nv063tccg00b40390@direct.labs.play-with-docker.com:/directory_remote
+4.3 rsync -av -f="-! */" directory_remote/* ip172-18-0-25-cd6nv063tccg00b40390@direct.labs.play-with-docker.com:/directory_remote
+
+5.1 scp data/* ip172-18-0-38-cd6tf2v91rrg009fj360@direct.labs.play-with-docker.com:~/data
+	 tar xf practical4_logs.tar.xz && cd logs
+	 grep "GET" logs_2015-01-13-1[0-7].tsv | awk '{print $2}' | sort -n | uniq -c | sort -rn | head -3
+	 
+	  12804 196.59.247.44
+	  12787 33.20.24.162
+	  12766 173.70.244.37
+	  
+5.2 mkdir ../archive && find . -name "*.tsv" -size +5M -exec cp "{}" ../archive \; && ls ../archive | wc -l
+	
+	  37
+	
+5.3 tar xf practical4_data_for_science.tar.xz && cd data_for_science
+	 du -ha ./* | sort -hr | head -3 | awk '{print $2}' | xargs grep bad | awk '{print tolower($2)}' | tr ',' '\n' | uniq -cu | head -12 | tail -3
+	 
+	  1 extensively
+     1 proposition
+     1 jainism
+

@@ -1,0 +1,108 @@
+ssh sbeer "mkdir -p ~/backup"
+scp -r * sbeer:/root backup (* == copy evthg but hidden file . , scp == copy and substitute) 
+
+cd backup3/
+rm std.err
+cd ..
+rsync -avP backup2/ backup3
+rsync -avP backup2/ sbeer:~/backup4
+
+# Download from website
+wget https://
+rclone
+-------------------------------------------------------------------------------------------------
+Lab #4
+## PART 1 (1) a
+root@7b2ca2a1603c:~# ssh-keygen -t ed25519 -b 1024 -f new_key_ed25519
+Generating public/private ed25519 key pair.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in new_key_ed25519
+Your public key has been saved in new_key_ed25519.pub
+The key fingerprint is:
+SHA256:GmRkd9L+q/8gsCuZCL9dkazGNNOFPkP5O1mrHkPUJOI root@7b2ca2a1603c
+The key's randomart image is:
++--[ED25519 256]--+
+|      o +.o .    |
+|     o o *.+     |
+|      o E.o .    |
+|     o = =.      |
+|      = S o..    |
+|  .  o * B +..   |
+|   o .=oo B o.   |
+|    oo+. . *..   |
+|    ......+o...  |
++----[SHA256]-----+
+-------------------------------------------------------------------------------------------------
+## PART 1 (1) b
+root@7b2ca2a1603c:~# ssh-keygen -p -f new_key_ed25519
+Key has comment 'root@7b2ca2a1603c'
+Enter new passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved with the new passphrase.
+-------------------------------------------------------------------------------------------------
+## PART 1 (2) 
+root@7b2ca2a1603c:~# ssh-copy-id -n -i new_key_ed25519.pub sshuser
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "new_key_ed25519.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+
+/usr/bin/ssh-copy-id: WARNING: All keys were skipped because they already exist on the remote system.
+                (if you think this is a mistake, you may want to use -f option)
+
+root@7b2ca2a1603c:~# ssh-copy-id -f -i new_key_ed25519.pub sshuser
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "new_key_ed25519.pub"
+bind [::1]:8888: Cannot assign requested address
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'sshuser'"
+and check to make sure that only the key(s) you wanted were added.
+
+
+
+root@7b2ca2a1603c:~# vim .ssh/config 
+root@7b2ca2a1603c:~# ssh sshuser
+Enter passphrase for key '/root/new_key_ed25519': 
+bind [::1]:8888: Cannot assign requested address
+Welcome to Ubuntu 22.04.1 LTS (GNU/Linux 5.10.124-linuxkit x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+This system has been minimized by removing packages and content that are
+not required on a system that users do not log into.
+
+To restore this content, you can run the 'unminimize' command.
+Last login: Mon Oct 17 14:29:45 2022 from 127.0.0.1
+-------------------------------------------------------------------------------------------------
+## PART 2 (1) 
+
+
+
+
+-------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------
+
+
+
+
+
+

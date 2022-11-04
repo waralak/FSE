@@ -1,0 +1,240 @@
+gi(1) Make a new directory with name practice-project
+root@7b2ca2a1603c:/# mkdir practice-project
+
+
+(2) Run git init in this directory
+root@7b2ca2a1603c:/# cd practice-project/
+root@7b2ca2a1603c:/practice-project# git init
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint:   git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint:   git branch -m <name>
+Initialized empty Git repository in /practice-project/.git/
+
+
+(3) Make directory useful_package, and __init__.py inside it
+root@7b2ca2a1603c:/practice-project# mkdir useful_package && touch __init__.py
+
+
+(4) Stage and commit changes to a master branch
+root@7b2ca2a1603c:/practice-project# git add .
+root@7b2ca2a1603c:/practice-project# git commit -m "master commit"
+[master (root-commit) 70b17ad] master commit
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 useful_package/__init__.py
+ 
+
+(5) Create and checkout a branch module_a_dev
+root@7b2ca2a1603c:/practice-project# git checkout -b module_a_dev
+Switched to a new branch 'module_a_dev'
+
+
+(6) Create a file useful_package/module_a.py with a single function polynom_3 that returns some cubic
+root@7b2ca2a1603c:/practice-project# vim useful_package/module_a.py
+root@7b2ca2a1603c:/practice-project# chmod +x useful_package/module_a.py 
+
+
+(7) Add import of polynom_3 to a useful_package/__init__.py
+root@7b2ca2a1603c:/practice-project# find . -name "module_a.py" -exec grep "import" {} \; > useful_package/__init__.py
+
+
+(8) Stage and commit changes to a module_a_dev branch
+root@7b2ca2a1603c:/practice-project# git add useful_package/__init__.py 
+root@7b2ca2a1603c:/practice-project# git add useful_package/module_a.py 
+root@7b2ca2a1603c:/practice-project# git commit -m "commit module a"
+[module_a_dev 11e5c72] commit module a
+ 2 files changed, 14 insertions(+)
+ create mode 100755 useful_package/module_a.py
+ 
+ 
+(9) Checkout on master
+root@7b2ca2a1603c:/practice-project# git checkout master
+Switched to branch 'master'
+
+
+(10) Create and checkout a branch module_b_dev
+root@7b2ca2a1603c:/practice-project# git checkout -b module_b_dev
+Switched to a new branch 'module_b_dev'
+
+
+(11) Create a file useful_package/module_b.py with a single function hyperbola that returns some hyperbola of X (with known definition area)
+root@7b2ca2a1603c:/practice-project# vim useful_package/module_b.py
+root@7b2ca2a1603c:/practice-project# chmod +x useful_package/module_b.py 
+
+
+(12) Add import of hyperbola to a useful_package/__init__.py
+root@7b2ca2a1603c:/practice-project# find . -name "module_b.py" -exec grep "import" {} \; > useful_package/__init__.py
+
+
+(13) Add and commit changes to a module_b_dev branch
+root@7b2ca2a1603c:/practice-project# git add useful_package/__init__.py 
+root@7b2ca2a1603c:/practice-project# git add useful_package/module_b.py 
+root@7b2ca2a1603c:/practice-project# git commit -m "commit module b"
+[module_b_dev 49bbd77] commit module b
+ 2 files changed, 14 insertions(+)
+ create mode 100755 useful_package/module_b.py
+ 
+ 
+(14) Checkout on master and merge module_a_dev
+root@7b2ca2a1603c:/practice-project# git checkout master
+Switched to branch 'master'
+root@7b2ca2a1603c:/practice-project# git merge module_a_dev
+Updating 70b17ad..11e5c72
+Fast-forward
+ useful_package/__init__.py |  1 +
+ useful_package/module_a.py | 13 +++++++++++++
+ 2 files changed, 14 insertions(+)
+ create mode 100755 useful_package/module_a.py
+ 
+ 
+(15) Then merge module_b_dev and resolve conflicts (after modification don’t forget to git add )
+root@7b2ca2a1603c:/practice-project# git merge module_b_dev
+Auto-merging useful_package/__init__.py
+CONFLICT (content): Merge conflict in useful_package/__init__.py
+Automatic merge failed; fix conflicts and then commit the result.
+
+root@7b2ca2a1603c:/practice-project# vim useful_package/__init__.py
+root@7b2ca2a1603c:/practice-project# git add useful_package/__init__.py 
+root@7b2ca2a1603c:/practice-project# git status
+On branch master
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+        modified:   useful_package/__init__.py
+        new file:   useful_package/module_b.py
+
+
+(16) Commit changes to master branch
+root@7b2ca2a1603c:/practice-project# git commit -m "commit merge"
+[master 86f950c] commit merge
+
+
+(17) Go to github.com, create a new empty repository
+https://github.com/waralak/Lab3
+
+
+(18) Add this repository to ours as a remote repository
+root@7b2ca2a1603c:/practice-project# git remote add origin git@github.com:waralak/Lab3.git
+
+
+(19) Push to github.com our master branch
+root@7b2ca2a1603c:/practice-project# git push -u origin master
+The authenticity of host 'github.com (140.82.121.4)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? y
+Please type 'yes', 'no' or the fingerprint: yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+Enumerating objects: 18, done.
+Counting objects: 100% (18/18), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (18/18), 1.54 KiB | 197.00 KiB/s, done.
+Total 18 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), done.
+To github.com:waralak/Lab3.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+
+
+(20) Create a new branch regression-feature and switch to it
+root@7b2ca2a1603c:/practice-project# git checkout -b regression-feature
+Switched to a new branch 'regression-feature'
+
+
+(21) Create the main.py script in the root of our project. It shall contain a shebang and when executed as `./main.py x` it shall print x, polynom_3(x) and hyperbola(x).
+root@7b2ca2a1603c:/practice-project# vim main.py
+root@7b2ca2a1603c:/practice-project# chmod +x main.py
+
+
+(22) Add changes, commit them to regression-feature
+root@7b2ca2a1603c:/practice-project# git add main.py
+root@7b2ca2a1603c:/practice-project# git commit main.py
+Aborting commit due to empty commit message.
+root@7b2ca2a1603c:/practice-project# git commit -m "commit main"
+[regression-feature 6e0b0d9] commit main
+ 1 file changed, 9 insertions(+)
+ create mode 100755 main.py
+ 
+ 
+(23) Push regression-feature to a remote regression-feature and open a pull request on github (to master)
+root@7b2ca2a1603c:/practice-project# git push -u origin regression-feature
+Enumerating objects: 21, done.
+Counting objects: 100% (21/21), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (21/21), 1.89 KiB | 241.00 KiB/s, done.
+Total 21 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), done.
+remote: 
+remote: Create a pull request for 'regression-feature' on GitHub by visiting:
+remote:      https://github.com/waralak/Lab3/pull/new/regression-feature
+remote: 
+To github.com:waralak/Lab3.git
+ * [new branch]      regression-feature -> regression-feature
+Branch 'regression-feature' set up to track remote branch 'regression-feature' from 'origin'.
+
+
+(24) Accept pull request (add comments to some lines first) and look at new master
+In github.com
+
+
+(25) Return back to terminal change directory to outside out local git repository and clone it from the
+github.com to a folder project-clone
+
+root@7b2ca2a1603c:/# mkdir project-clone
+root@7b2ca2a1603c:/# git clone git@github.com:waralak/Lab3.git project-clone
+Cloning into 'project-clone'...
+remote: Enumerating objects: 44, done.
+remote: Counting objects: 100% (44/44), done.
+remote: Compressing objects: 100% (31/31), done.
+remote: Total 44 (delta 9), reused 23 (delta 3), pack-reused 0
+Receiving objects: 100% (44/44), 6.74 KiB | 1.35 MiB/s, done.
+Resolving deltas: 100% (9/9), done.
+root@7b2ca2a1603c:/# cd project-clone
+root@7b2ca2a1603c:/project-clone# ./main.py
+3
+3
+
+0
+2.8284271247461903
+
+root@7b2ca2a1603c:/project-clone# cat main.py
+#!/usr/bin/env python3
+
+from sys import stdin
+from useful_package import module_a, module_b
+
+if __name__ == "__main__":
+    for x in stdin:
+        print(f'{x}\n{module_a.polynom_3(x)}\n{module_b.hyperbola(x)}')
+        
+root@7b2ca2a1603c:/project-clone# cat useful_package/module_a.py
+#!/usr/bin/env python3
+
+import numpy as np
+
+def polynom_3(x):
+    x = int(x)
+    #return pow(int(x), 3) - 6*pow(int(x), 2) + 11*int(x) -6
+    return (x**3) - 6*(x**2) + 11*x - 6
+    
+root@7b2ca2a1603c:/project-clone# cat useful_package/module_b.py
+#!/usr/bin/env python3
+
+# hyperbola: x^2 - Y^2 = 1
+
+import math 
+
+def hyperbola(x):
+    x = int(x)
+    return math.sqrt(pow(x, 2) - 1)
+
+

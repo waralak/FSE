@@ -1,0 +1,74 @@
+1. vim script.sh
+	chmod u+x script.sh && ./script.sh
+	
+	#!/bin/sh
+	gcc -Wall -O3 star_pattern.c -o star_pattern
+	
+2. vim script.sh
+	chmod u+x script.sh && ./script.sh
+
+	#!/bin/sh
+	compiler="gcc"
+	input_filename="star_pattern.c"
+	output_filename="star_pattern"
+	options="-Wall -O3"
+
+	$compiler $options $input_filename -o $output_filename
+	
+3. sudo apt-get install -y libcgal-dev libgmp-dev
+	./install_cgal-4.14.1.sh
+	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/konstantin/fse/lab5/practical_5/task_3/lib"
+	g++ voronoi_1.cpp -lgmp -L./lib -lCGAL -o voronoi_1
+
+4. cp ../task_3/voronoi_1 . && gunzip -k blade.xyz.gz && ./voronoi_1 -f blade.xyz -o .
+5. 
+	#!/bin/sh
+
+	compiler="g++"
+	headers="-I ./Graph-Executor"
+	cpp_files="Graph-Executor/*.cpp"
+	options="-Wall -Wextra -std=c++14 -g -pthread"
+	output="-o test"
+
+	$compiler $options $headers $cpp_files $output
+	
+6. vim Makefile
+	
+	all:
+		gcc star_pattern.c -o star_pattern
+
+	clean:
+		rm  star_pattern
+		
+7. vim Makefile
+
+	compiler = gcc
+	compilation_flags = -Wall -O3
+	output_file = star_pattern
+
+	all:
+		$(compiler) $(compilation_flags) $(wildcard *.c) -o $(output_file)
+
+	clean:
+		rm  $(output_file)
+		
+8. vim Makefile
+
+	compiler = g++
+	headers = -I ./Graph-Executor
+	cpp_files = $(wildcard Graph-Executor/*.cpp)
+	options = -Wall -Wextra -std=c++14 -g -pthread
+	output = test
+
+	all:
+		$(compiler) $(options) $(headers) $(cpp_files) -o $(output)
+
+	clear:
+		rm -f $(output)
+		
+9. wget https://github.com/CGAL/cgal/archive/refs/tags/v5.3.tar.gz
+	cgal-5.3/Mesh_2/examples/Mesh_2/
+	mkdir build && cd build
+	cmake ..
+	make
+

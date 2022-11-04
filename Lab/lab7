@@ -1,0 +1,125 @@
+1. Write a python file “circle.py” with a program to compute an area of 
+a circle, given its radius. The program should read the circle radius 
+from a standard input, and write the area to a standard output. The code 
+that actually computes the area should be encapsulated in a function 
+“compute_area”. The code to read input, compute the area, and print the 
+result should be wrapped into a “main” function.
+
+
+from math import pi
+
+def compute_area(r):
+    return pi * r ** 2
+
+if __name__ == "__main__":
+    print(compute_area(int(input()))
+
+2. Create a test-case for the encapsulated function, along with several test 
+methods. Write at least three different tests, providing a random valid input 
+(“test_valid_input”), random invalid input (“test_invalid_input”), and a 
+boundary condition (“test_boundary”).
+
+import unittest
+import numpy as np
+
+from circle import compute_area
+
+class ComputeAreaTestCase(unittest.TestCase):
+    def test_valid(self):
+        valid_radius = 1.0
+        output = compute_area(valid_radius)
+        expected_output = np.pi
+        self.assertEqual(output, expected_output, places=2)
+
+    def test_invalid(self):
+        invalid_radius = -1
+        with self.assertRaises(AssertionError):
+            compute_area(invalid_radius)
+
+        invalid_radius = None
+        with self.assertRaises(AssertionError):
+            compute_area(invalid_radius)
+
+        invalid_radius = "abc"
+        with self.assertRaises(AssertionError):
+            compute_area(invalid_radius)
+
+    def test_boundary(self):
+        radius = 0.0
+        self.assertEqual(compute_area(radius),0.)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+3. Use the “unittest” Python package from the command-line to run all of the 
+tests, or each individual test, or tests matching a regex.
+
+python -m unittest test -v
+
+4. Create a test-case for the “main” function, that would test both how the 
+circle area is computed and how the program interacts with the console. Note: 
+you need to emulate console IO. To this end, use the “setUp/tearDown” instance 
+methods in the “unittest.TestCase” class to substitute “sys.stdin” and 
+“sys.stdout” for “StringIO” objects. The rest of the test case should be the 
+same.
+
+class CircleProgramTestCase(unittest.TestCase):
+    
+    def setUp(self):
+        self.stdin = StringIO()
+        self.stdout = StringIO()
+        self._stdin = sys.stdin
+        self._stdout = sys.stdout
+        sys.stdin = self.stdin
+        sys.stdout = self.stdout
+
+    def tearDown(self):
+        sys.stdin = self._stdin
+        sys.stdout = self._stdout
+
+    def test_valid(self):
+        valid_radius = 1.0
+        self.stdin.write(str(valid_radius))
+        self.stdin.seek(0)
+        main()
+        self.stdout.seek(0)
+        output = self.stdout.read()
+        print(output)
+
+5. Modify the test-case for the “main” function using the “unittest.mock” 
+package. Put the invocation of the “main” function into “unittest.mock.patch” 
+context manager to manage mocking of the standard input and standard output.
+
+import unittest
+import numpy as np
+from unittest import mock
+from unittest.mock import patch
+from math import pi
+from circle import compute_area
+
+class ComputeAreaTestCase(unittest.TestCase):
+  
+    def test_valid1(self):
+        valid_result = np.pi
+        valid_input = mock.Mock(return_value = valid_result)
+        with mock.patch('circle.compute_area', valid_input):
+            self.assertEqual(compute_area(1), valid_result)
+    
+    
+    def test_valid2(self):
+        valid_result = 4 * np.pi
+        valid_input = mock.Mock(return_value = valid_result)
+        with mock.patch('circle.compute_area', valid_input):
+            self.assertEqual(compute_area(2), valid_result)
+    
+    def test_invalid1(self):
+        invalid_result = 'a'
+        invalid_input = mock.Mock(return_value = invalid_result)
+        with mock.patch('circle.compute_area', invalid_input):
+            with self.assertRaises(TypeError):
+                compute_area(invalid_result)
+
+if __name__ == '__main__':
+    unittest.main()
+
