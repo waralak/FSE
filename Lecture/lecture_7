@@ -1,0 +1,164 @@
+beer@B:~$ docker image
+
+beer@B:~$ docker run -it --name unittest ubuntu:22.04
+
+root@0dbb6d761619:/# apt update 
+                            
+root@0dbb6d761619:/# apt install python3 vim
+
+root@0dbb6d761619:/# cd /root/
+
+root@0dbb6d761619:~# ls -la
+total 16
+drwx------ 2 root root 4096 Oct  3 21:44 .
+drwxr-xr-x 1 root root 4096 Oct 18 06:57 ..
+-rw-r--r-- 1 root root 3106 Oct 15  2021 .bashrc
+-rw-r--r-- 1 root root  161 Jul  9  2019 .profile
+
+root@0dbb6d761619:~# mkdir pack
+
+root@0dbb6d761619:~# ls
+pack
+root@0dbb6d761619:~# cd pack
+root@0dbb6d761619:~/pack# touch __init__.py
+root@0dbb6d761619:~/pack# mkdir mod_a
+root@0dbb6d761619:~/pack# mkdir mod_b
+root@0dbb6d761619:~/pack# touch mod_a/__init__.py
+root@0dbb6d761619:~/pack# touch mod_b/__init__.py
+root@0dbb6d761619:~/pack# apt install tree
+
+root@0dbb6d761619:~/pack# tree
+.
+|-- __init__.py
+|-- mod_a
+|   `-- __init__.py
+`-- mod_b
+    `-- __init__.py
+
+2 directories, 3 files
+
+root@0dbb6d761619:~/pack# vim mod_a/distance.py
+root@0dbb6d761619:~# cat pack/mod_a/distance.py 
+import sys
+import os
+
+# return length of (0,0)-(x,y) interval
+# x and y can be any floating point numbers
+# output is non-negative value
+
+def hypot2(x, y):
+    #return (x**x + y**y)**0.5
+    assert isinstance(x, float)
+    assert isinstance(y, float)
+    x = abs(x)
+    y = abs(y)
+    a = max(x, y)
+    if a ==0.0:
+        return 0.0
+    b = min(x, y)
+    c = b/a
+    return a*(1 + c*c)**0.5
+
+
+# Read x and y from stdin, output hypot2(x, y) into stdout
+
+def hypot2_io():
+    strin = sys.stdin.read()
+    x, y = strin.split(" ")
+    x = float(x)
+    y = float(y)
+    print(hypot2(x, y))
+
+
+root@0dbb6d761619:~/pack# cd ..
+root@0dbb6d761619:~# python3
+
+
+root@0dbb6d761619:~# vim pack/mod_a/test_distance.py
+import sys
+from io import StringIO
+from pack.mod_a.distance import hypot2, hypot2_io
+import unittest
+
+class Hypot2_TestCase(unittest.TestCase):
+    def test_valid1(self):
+        self.assertEqual(5.0, hypot2(3.0, 4.0))	
+    def test_valid2(self):
+        self.assertEqual(0.0, hypot2(0.0, 0.0))	
+    def test_valid3(self):
+        self.assertEqual(5.0, hypot2(-3.0, -4.0))
+    def test_valid4(self):
+        self.assertEqual(5.0e+300, hypot2(-3e+300, -4e+300))
+    def test_invalid1(self):
+        with self.assertRaises(AssertionError):
+            hypot2("a", 3.0)
+    def test_invalid2(self):
+        with self.assertRaises(AssertionError):
+            hypot2(3.0, 3)
+
+class Hypot2IO_TestCase(unittest.TestCase):
+    def setUp(self):
+        self.stdin = StringIO()
+        self.stdout = StringIO()
+        self._stdin = sys.stdin
+        self._stdout = sys.stdout
+        sys.stdin = self.stdin
+        sys.stdout = self.stdout
+    def tearDown(self):
+        sys.stdin = self._stdin
+        sys.stdout = self._stdout
+
+    def _test_valid(self, strin, res_ref):
+        sys.stdin.write(strin)
+        sys.stdin.seek(0)
+        hypot2_io()
+        sys.stdout.seek(0)
+        output = sys.stdout.read()
+        self.assertAlmostEqual(res_ref, float(output), places=5)
+
+    def test_valid1(self):
+        self._test_valid("3.0 4.0", 5.0)
+
+    def test_invalid1(self):
+        with self.assertRaises(ValueError):
+            self._test_valid("a 4.0", 5.0)
+
+
+
+root@0dbb6d761619:~# python3 -m unittest pack/mod_a/test_distance.py 
+
+root@0dbb6d761619:~# apt install pip
+root@0dbb6d761619:~# pip install coverage
+
+
+root@0dbb6d761619:~# python3 -m coverage run -m unittest pack/mod_a/test_distance.py 
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+OK
+
+
+root@0dbb6d761619:~# python3 -m coverage report
+Name                          Stmts   Miss  Cover
+-------------------------------------------------
+pack/__init__.py                  0      0   100%
+pack/mod_a/__init__.py            0      0   100%
+pack/mod_a/distance.py           19      0   100%
+pack/mod_a/test_distance.py      42      0   100%
+-------------------------------------------------
+TOTAL                            61      0   100%
+
+
+
+root@0dbb6d761619:~# python3 -m coverage html  
+Wrote HTML report to htmlcov/index.html
+
+
+
+
+
+
+
+
+
